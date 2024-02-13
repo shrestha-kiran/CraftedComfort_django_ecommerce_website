@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     # installed apps
     'craftedcomfort.apps.CraftedcomfortConfig',
+    'product.apps.ProductConfig',
 
 ]
 
