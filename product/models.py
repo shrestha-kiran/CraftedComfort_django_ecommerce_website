@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField()
@@ -12,8 +13,10 @@ class Category(models.Model):
     def __str__(self) -> str:
         return self.name
 
+
 class Product(models.Model):
-    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        Category, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     slug = models.SlugField()
     description = models.TextField(blank=True, null=True)
@@ -22,6 +25,9 @@ class Product(models.Model):
 
     class Meta:
         ordering = ('-created_at',)
-    
+
     def __str__(self):
         return self.name
+
+    def get_display_price(self):
+        return f'${self.price / 100:.2f}'
