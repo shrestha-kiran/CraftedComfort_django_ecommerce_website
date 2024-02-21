@@ -10,6 +10,8 @@ def frontpage(request):
 
     return render(request, 'craftedcomfort/frontpage.html', {'products': products})
 
+def signup(request):
+    return render(request, 'craftedcomfort/signup.html')
 
 def shop(request):
     categories = Category.objects.all()
