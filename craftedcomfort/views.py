@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Q
+from .forms import SignUpForm
+from django.contrib.auth import login, authenticate
 
 # Create your views here.
 from product.models import Product, Category
@@ -10,8 +12,20 @@ def frontpage(request):
 
     return render(request, 'craftedcomfort/frontpage.html', {'products': products})
 
+
 def signup(request):
-    return render(request, 'craftedcomfort/signup.html')
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+
+            return redirect('/')
+    else:
+        form = SignUpForm()
+
+    return render(request, 'craftedcomfort/signup.html', {'form': form})
+
 
 def shop(request):
     categories = Category.objects.all()
